@@ -1,0 +1,938 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #b2cfc9;
+  margin: 0;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Основной контейнер */
+.currency-widget {
+  background-color: #f3fffa;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 20px;
+}
+
+.currency-widget h1 {
+  font-size: 32px;
+}
+
+.widget-title {
+  color: #333;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Блок конвертации валют */
+.currency-converter {
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.currency-converter h2 {
+  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+.currency-converter .converter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.currency-converter .input-group,
+.currency-converter .select-currency,
+.currency-converter .output-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  width: 22%;
+  min-width: 22%;
+}
+
+/* Стрелка */
+.currency-converter .arrow {
+  cursor: pointer;
+  color: #333;
+  font-size: 20px;
+  margin: 0 10px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* При наведении */
+.currency-converter .arrow:hover {
+  color: #495e52;
+  cursor: pointer;
+}
+
+/* При нажатии */
+.currency-converter .arrow:active {
+  color: #243129;
+  transform: scale(0.95);
+  cursor: pointer;
+}
+
+/* Для активного состояния (после нажатия) */
+.currency-converter .arrow.active {
+  color: #495e52;
+  cursor: pointer;
+}
+
+/* Состояние когда не активно и не наведено */
+.currency-converter .arrow:not(.active):not(:hover) {
+  color: #333;
+  cursor: pointer;
+}
+
+.currency-converter label {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-align: left;
+  color: #555;
+}
+
+/* Поля ввода */
+input[type="number"],
+input[type="text"],
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type="number"]:hover {
+  border-color: #839587;
+  box-shadow: 0 0 5px rgba(131, 149, 135, 0.5);
+}
+
+/* Списки */
+.custom-select {
+  position: relative;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.select-selected {
+  padding: 11px 40px 10px 10px;
+  padding-right: 30px;
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Стрелка */
+.select-selected:after {
+  content: "\f078";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: transform 0.3s ease;
+  color: #555;
+}
+
+/* Стрелка вверх при открытом состоянии */
+.select-selected.select-arrow-active:after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Список опций */
+.select-items {
+  position: absolute;
+  background-color: #fff;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  border: 1px solid #ccc;
+  border-radius:5px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  text-align: left;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+
+.select-items div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.select-items div:hover {
+    background-color: #f5f5f5;
+}
+
+.same-as-selected {
+    background-color: #e0e0e0;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #fff;
+  outline: none;
+}
+
+select:hover {
+  border-color: #999;
+}
+
+select:focus {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* График */
+.currency-chart {
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.currency-chart h2 {
+  color: #555;
+  font-size: 22px;
+  text-align: left;
+}
+
+.currency-chart .date-range {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.currency-chart .date-range label {
+  margin: 0 10px;
+}
+
+.date-range {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.date-range label {
+  margin: 0 10px;
+}
+
+.date-range input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: auto;
+}
+
+#update-chart {
+  padding: 8px 15px;
+  background-color: #839587;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#swap-button i {
+  transition: transform 0.3s ease;
+}
+
+#swap-button:hover i {
+  color: #495e52;
+}
+
+#swap-button:active i {
+  transform: scale(0.95) rotate(180deg);
+}
+
+.custom-select .custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  z-index: 10;
+  display: none;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.custom-select .custom-options.show {
+  display: block;
+}
+
+.custom-select .custom-option {
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.custom-select .custom-option:hover {
+  background-color: #f0f0f0;
+}
+
+i {
+  margin-right: 5px;
+}
+
+/* Кнопки */
+.time-period {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-period button {
+  margin-right: 5px;
+  border-radius: 5px;
+  padding: 8px 16px;
+  border: none;
+  background-color: #839587;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-period button:hover {
+  background-color: #4F5958;
+}
+
+.time-period button:active {
+  background-color: #242929;
+}
+
+.period-button {
+  background-color: #839587;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.period-button:hover {
+  background-color: #4F5958;
+}
+
+.period-button:active {
+  background-color: #242929;
+}
+
+.period-button.active {
+  background-color: #4F5958;
+  color: white;
+}
+
+#toggleChartButton{
+  display: block;
+  background-color: rgb(75, 95, 126);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  border: none;
+  justify-content: left;
+}
+
+/* При наведении */
+#toggleChartButton:hover {
+  background-color: rgb(57, 76, 104);
+  cursor: pointer;
+}
+
+/* При нажатии */
+#toggleChartButton:active {
+  background-color: rgb(45, 64, 92);
+  transform: scale(0.95);
+  cursor: pointer;
+}
+
+/* Для активного состояния (после нажатия) */
+#toggleChartButton.active {
+  background-color: rgb(57, 76, 104);
+  cursor: pointer;
+}
+
+/* Не активно и не наведено */
+#toggleChartButton:not(.active):not(:hover) {
+  background-color: rgb(75, 95, 126);
+  cursor: pointer;
+}
+
+/* Ошибки */
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+    display: none;
+    bottom: -20px;
+    position: absolute;
+    left: 0;
+}
+
+#from-amount.error {
+    border-color: #dc3545;
+}
+
+.curs{
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+}
+
+.chart-loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #304463;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+/* Адаптация */
+/* Адаптация для маленьких смартфонов */
+@media (max-width: 400px) {
+  .currency-widget {
+    padding: 20px 10px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 22px;
+  }
+
+  .currency-chart h2{
+    font-size: 18px;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .currency-converter label {
+    font-size: 14px;
+  }
+  
+  .time-period button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  #toggleChartButton {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .error-message {
+    font-size: 12px;
+  }
+}
+
+/* Адаптация для смартфонов */
+@media (max-width: 767px) {
+  .currency-widget {
+    padding: 25px 15px;
+    margin: 10px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 26px;
+  }
+
+  .select-selected{
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .custom-select{
+    border-radius: 5px;
+  }
+
+  .select-items{
+    font-size: 14px;
+  }
+
+  .converter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .currency-converter .input-group,
+  .currency-converter .select-currency,
+  .currency-converter .output-group {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .currency-converter .arrow {
+    margin: 10px 0;
+    transform: rotate(90deg);
+  }
+  
+  .time-period {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+  }
+  
+  .time-period button {
+    width: auto;
+    margin-bottom: 0;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  #toggleChartButton{
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .error-message {
+    position: relative; 
+    bottom: auto;
+    left: auto; 
+    margin-top: 5px; 
+  }
+  
+  .input-group {
+    position: relative;
+  }
+}
+
+/* Адаптация для планшетов (горизонтальная ориентация) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .currency-widget {
+    padding: 30px;
+  }
+  
+  .currency-converter .input-group,
+  .currency-converter .select-currency,
+  .currency-converter .output-group {
+    width: 90%;
+  }
+  
+  .currency-converter label {
+    font-size: 16px;
+  }
+
+  .custom-select{
+    border-radius: 5px;
+  }
+}
+
+/* Адаптация для планшетов (вертикальная ориентация) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .currency-widget {
+    padding: 25px;
+  }
+  
+  .error-message {
+    position: relative; 
+    bottom: auto;
+    left: auto; 
+    margin-top: 5px; 
+  }
+
+  .converter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .converter-row {
+    flex-wrap: wrap;
+  }
+
+  .custom-select{
+    border-radius: 5px;
+  }
+
+  .currency-converter .input-group,
+  .currency-converter .select-currency,
+  .currency-converter .output-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .currency-converter .arrow {
+    margin: 10px 10px;
+    transform: rotate(90deg);
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Адаптация для больших экранов */
+@media (min-width: 1921px) {
+  .currency-widget {
+    max-width: 1200px;
+    padding: 50px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 42px;
+  }
+
+  .currency-chart h2 {
+    font-size: 24px;
+  }
+
+  .select-selected{
+    font-size: 18px;
+    padding: 12px ;
+  }
+
+  .custom-select{
+    border-radius: 6px;
+  }
+
+  .currency-converter label,
+  input[type="number"],
+  input[type="text"],
+  select {
+    font-size: 20px;
+  }
+  
+  .currency-converter .arrow {
+    font-size: 28px;
+  }
+  
+  .time-period button {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+
+  #toggleChartButton{
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+
+  .curs{
+    font-size: 20px;  
+  }
+}
+
+/* Адаптация для очень больших экранов */
+@media (min-width: 2500px) {
+  .currency-widget {
+    max-width: 1800px;
+    padding: 60px;
+  }
+
+  .select-selected{
+    font-size: 25px;
+    padding: 15px;
+  }
+
+  .custom-select{
+    border-radius: 9px;
+  }
+
+  .currency-widget h1 {
+    font-size: 48px;
+    margin-bottom: 50px;
+  }
+
+  .currency-converter h2 {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  
+  .currency-converter .converter-row {
+    margin-bottom: 25px;
+  }
+  
+  .currency-converter .input-group,
+  .currency-converter .select-currency,
+  .currency-converter .output-group {
+    width: 25%;
+  }
+  
+  .currency-converter label {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select {
+    padding: 15px;
+    font-size: 24px;
+    border-radius: 8px;
+  }
+  
+  .currency-converter .arrow {
+    font-size: 36px;
+    margin: 0 20px;
+    margin-top: 40px;
+  }
+  
+  .currency-chart h2 {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  
+  .time-period button {
+    padding: 15px 30px;
+    font-size: 24px;
+    border-radius: 8px;
+    margin-right: 15px;
+  }
+  
+  #toggleChartButton {
+    padding: 15px 30px;
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  .curs {
+    font-size: 28px;
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  
+  .select-currency::after {
+    right: 15px;
+    font-size: 20px;
+    top: 75%;
+  }
+  
+  .currency-chart {
+    margin-top: 40px;
+    margin-bottom: 50px;
+  }
+  
+  #currency-chart-canvas {
+    height: auto !important;
+  }
+}
+
+/* Адаптация для ультрашироких мониторов */
+@media (min-width: 3000px) {
+  .currency-widget {
+    max-width: 2400px;
+    padding: 80px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 56px;
+    margin-bottom: 60px;
+  }
+
+  .select-selected{
+    font-size: 32px;
+    padding: 18px 18px 18px 18px;
+  }
+
+  .custom-select{
+    border-radius: 12px;
+  }
+
+  .currency-converter h2 {
+    font-size: 42px;
+  }
+  
+  .currency-converter label {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select {
+    padding: 20px;
+    font-size: 28px;
+    border-radius: 10px;
+  }
+  
+  .currency-converter .arrow {
+    font-size: 44px;
+    margin: 0 25px;
+    margin-top: 50px;
+  }
+  
+  .time-period button,
+  #toggleChartButton {
+    padding: 20px 40px;
+    font-size: 28px;
+    border-radius: 10px;
+  }
+  
+  #currency-chart-canvas {
+    height: 1000px !important;
+  }
+  
+  .curs {
+    font-size: 32px;
+  }
+}
+
+/* Адаптация для профессиональных мониторов */
+@media (min-width: 5000px) {
+  .currency-widget {
+    max-width: 3200px;
+    padding: 100px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 72px;
+    margin-bottom: 80px;
+  }
+
+  .select-selected{
+    font-size: 36px;
+    padding: 24px 20px 24px 20px;
+  }
+
+  .custom-select{
+    border-radius: 12px;
+  }
+
+  .currency-converter h2 {
+    font-size: 54px;
+  }
+  
+  .currency-converter label {
+    font-size: 42px;
+    margin-bottom: 30px;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select {
+    padding: 25px;
+    font-size: 36px;
+    border-radius: 12px;
+  }
+  
+  .currency-converter .arrow {
+    font-size: 56px;
+    margin: 0 35px;
+    margin-top: 65px;
+  }
+  
+  .time-period button,
+  #toggleChartButton {
+    padding: 25px 50px;
+    font-size: 36px;
+    border-radius: 12px;
+  }
+  
+  #currency-chart-canvas {
+    height: 1400px !important;
+  }
+  
+  .curs {
+    font-size: 40px;
+  }
+}
+
+/* Адаптация для экстремальных разрешений */
+@media (min-width: 7000px) {
+  .currency-widget {
+    max-width: 4000px;
+    padding: 120px;
+  }
+  
+  .currency-widget h1 {
+    font-size: 88px;
+    margin-bottom: 100px;
+  }
+  
+  .currency-converter h2 {
+    font-size: 66px;
+  }
+  
+  .currency-converter label {
+    font-size: 52px;
+    margin-bottom: 40px;
+  }
+  
+  input[type="number"],
+  input[type="text"],
+  select {
+    padding: 30px;
+    font-size: 44px;
+    border-radius: 15px;
+  }
+  
+  .currency-converter .arrow {
+    font-size: 68px;
+    margin: 0 45px;
+    margin-top: 80px;
+  }
+  
+  .time-period button,
+  #toggleChartButton {
+    padding: 30px 60px;
+    font-size: 44px;
+    border-radius: 15px;
+  }
+  
+  #currency-chart-canvas {
+    height: 1700px !important;
+  }
+  
+  .curs {
+    font-size: 52px;
+  }
+}
